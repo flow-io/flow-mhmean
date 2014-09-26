@@ -7,8 +7,6 @@ for ( var i = 0; i < data.length; i++ ) {
 	data[ i ] = Math.random();
 }
 
-//var data = [2,4,0,1,0,8];
-
 // Create a readable stream:
 var readStream = eventStream.readArray( data );
 

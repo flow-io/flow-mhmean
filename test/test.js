@@ -67,7 +67,7 @@ describe( 'flow-mhmean', function tests() {
 		data = [2,3,5,6,0,5,3,7,6,0,2,3,0,4,0,3];
 
 		// Expected values of median in moving window
-		expected = [];
+		expected = [2.90323,4.28571,0,0,0,4.43662,4.66667,0,0,0,0,0,0,0];
 
 		// Create a new median stream
 		tStream = flowFactory()
@@ -92,7 +92,7 @@ describe( 'flow-mhmean', function tests() {
 			assert.lengthOf(actual,data.length-WINDOW+1);
 
 			for ( var i = 0; i < expected.length; i++ ) {
-				assert.strictEqual( actual[i], expected[i] );
+				assert.closeTo( actual[i], expected[i], 0.0001 );
 			}
 
 			done();
@@ -102,16 +102,16 @@ describe( 'flow-mhmean', function tests() {
 
     // Test 6
     it('should handle a zero in the initial buffer', function test(done) {
-		var data, expected, tStream, WINDOW = 6;
+		var data, expected, tStream, WINDOW = 4;
 
 		// Simulate some data
-		data = [75,34,14,56,97,85,15,24,37,56,85,35,21,59];
+		data = [1,0,3,4,6,7,8];
 
 		// Expected values of median in moving window
-		expected = [65.5,45,40,46.5,46.5,46.5,36,36,46.5];
+		expected = [0,0,4.48000,5.84348];
 
 		// Create a new median stream
-		tStream = medStream()
+		tStream = flowFactory()
 			.window(WINDOW)
 			.stream();
 
@@ -133,7 +133,7 @@ describe( 'flow-mhmean', function tests() {
 			assert.lengthOf(actual,data.length-WINDOW+1);
 
 			for ( var i = 0; i < expected.length; i++ ) {
-				assert.strictEqual( actual[i], expected[i] );
+				assert.closeTo( actual[i], expected[i], 0.0001 );
 			}
 
 			done();
